@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Event Countdown</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="font-sans bg-gray-100 text-gray-800">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="text-xl font-bold">EventHub</div>
+      <div class="space-x-6">
+        <a href="#countdown" class="hover:text-blue-500">Countdown</a>
+        <a href="#rsvp" class="hover:text-blue-500">RSVP</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-20">
+    <!-- Countdown Section -->
+    <section id="countdown" class="min-h-screen flex items-center justify-center bg-blue-100">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold mb-6">Next Event Starts In:</h1>
+        <div id="timer" class="text-3xl font-mono"></div>
+      </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section id="rsvp" class="min-h-screen flex items-center justify-center bg-white">
+      <form class="w-full max-w-md bg-gray-50 p-6 rounded shadow-md" onsubmit="event.preventDefault(); alert('RSVP Submitted!');">
+        <h2 class="text-2xl font-bold mb-4">RSVP Now</h2>
+        <input type="text" placeholder="Your Name" class="w-full p-2 mb-4 border rounded" required />
+        <input type="email" placeholder="Your Email" class="w-full p-2 mb-4 border rounded" required />
+        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- JavaScript for Countdown -->
+  <script>
+    const eventDate = new Date("2025-06-15T18:00:00").getTime();
+
+    const timer = document.getElementById("timer");
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      if (distance < 0) {
+        timer.innerHTML = "The event has started!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+  </script>
+</body>
+
+</html>
